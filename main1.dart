@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:intl/intl.dart';
 
 abstract class PersonalInfo {
+  String? leaveDate;
   String? userName;
   String? password;
   String? firstName;
@@ -25,7 +26,8 @@ abstract class PersonalInfo {
   String? leaveStatus;
 
   PersonalInfo(
-      {required this.leaveStatus,
+      {required this.leaveDate,
+      required this.leaveStatus,
       required this.salary,
       required this.userName,
       required this.password,
@@ -109,7 +111,8 @@ class AdminInfo implements PersonalInfo {
   double? salary;
 
   AdminInfo(
-      {required this.leaveStatus,
+      {required this.leaveDate,
+      required this.leaveStatus,
       required this.contactNumber,
       required this.currentAddress,
       required this.dateOfBirth,
@@ -153,7 +156,9 @@ class AdminInfo implements PersonalInfo {
         'Language Known: $languageKnown \n'
         'User Name: $userName \n'
         'Password: $password \n'
-        'Type of Account: $typeOfAccount \n';
+        'Type of Account: $typeOfAccount \n'
+        'Leave Date: $leaveDate\n'
+        'Leave Status: $leaveStatus\n';
   }
 
   static String? loginUserName() {
@@ -171,6 +176,9 @@ class AdminInfo implements PersonalInfo {
 
   @override
   String? leaveStatus;
+
+  @override
+  String? leaveDate;
 }
 
 class NewUserInfo implements PersonalInfo {
@@ -235,7 +243,8 @@ class NewUserInfo implements PersonalInfo {
   double? salary;
 
   NewUserInfo(
-      {required this.leaveStatus,
+      {required this.leaveDate,
+      required this.leaveStatus,
       required this.contactNumber,
       required this.currentAddress,
       required this.dateOfBirth,
@@ -258,7 +267,7 @@ class NewUserInfo implements PersonalInfo {
       required this.salary});
 
   static String? loginUserName() {
-    print('Please Login');
+    print('Please Sign Up');
     print('Enter your username.');
     final String? loginUsername = stdin.readLineSync();
     return '$loginUsername';
@@ -292,14 +301,29 @@ class NewUserInfo implements PersonalInfo {
         'Language Known: $languageKnown \n'
         'User Name: $userName \n'
         'Password: $password \n'
-        'Type of Account: $typeOfAccount \n';
+        'Type of Account: $typeOfAccount \n'
+        'Leave Date: $leaveDate\n'
+        'Leave Status: $leaveStatus\n';
   }
 
   @override
   String? leaveStatus;
+
+  @override
+  String? leaveDate;
 }
 
 class Dashboard {
+  static String employeesListLogo = ''' 
+  
+███████╗███╗░░░███╗██████╗░██╗░░░░░░█████╗░██╗░░░██╗███████╗███████╗░██████╗        ██╗░░░░░██╗░██████╗████████╗
+██╔════╝████╗░████║██╔══██╗██║░░░░░██╔══██╗╚██╗░██╔╝██╔════╝██╔════╝██╔════╝        ██║░░░░░██║██╔════╝╚══██╔══╝
+█████╗░░██╔████╔██║██████╔╝██║░░░░░██║░░██║░╚████╔╝░█████╗░░█████╗░░╚█████╗░        ██║░░░░░██║╚█████╗░░░░██║░░░
+██╔══╝░░██║╚██╔╝██║██╔═══╝░██║░░░░░██║░░██║░░╚██╔╝░░██╔══╝░░██╔══╝░░░╚═══██╗        ██║░░░░░██║░╚═══██╗░░░██║░░░
+███████╗██║░╚═╝░██║██║░░░░░███████╗╚█████╔╝░░░██║░░░███████╗███████╗██████╔╝        ███████╗██║██████╔╝░░░██║░░░
+╚══════╝╚═╝░░░░░╚═╝╚═╝░░░░░╚══════╝░╚════╝░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░        ╚══════╝╚═╝╚═════╝░░░░╚═╝░░░
+  
+   ''';
   static String logo = '''
   
  ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗██╗   ██╗    ███╗   ██╗███████╗██╗    ██╗███████╗
@@ -309,6 +333,37 @@ class Dashboard {
 ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║   ██║       ██║ ╚████║███████╗╚███╔███╔╝███████║
  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝       ╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚══════
 ''';
+
+  static String profileLogo = '''
+  
+██████╗░██████╗░░█████╗░███████╗██╗██╗░░░░░███████╗
+██╔══██╗██╔══██╗██╔══██╗██╔════╝██║██║░░░░░██╔════╝
+██████╔╝██████╔╝██║░░██║█████╗░░██║██║░░░░░█████╗░░
+██╔═══╝░██╔══██╗██║░░██║██╔══╝░░██║██║░░░░░██╔══╝░░
+██║░░░░░██║░░██║╚█████╔╝██║░░░░░██║███████╗███████╗
+╚═╝░░░░░╚═╝░░╚═╝░╚════╝░╚═╝░░░░░╚═╝╚══════╝╚══════╝
+  
+  ''';
+
+  static String timeCardLogo = '''
+  
+████████╗██╗███╗░░░███╗███████╗        ░█████╗░░█████╗░██████╗░██████╗░
+╚══██╔══╝██║████╗░████║██╔════╝        ██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+░░░██║░░░██║██╔████╔██║█████╗░░        ██║░░╚═╝███████║██████╔╝██║░░██║
+░░░██║░░░██║██║╚██╔╝██║██╔══╝░░        ██║░░██╗██╔══██║██╔══██╗██║░░██║
+░░░██║░░░██║██║░╚═╝░██║███████╗        ╚█████╔╝██║░░██║██║░░██║██████╔╝
+░░░╚═╝░░░╚═╝╚═╝░░░░░╚═╝╚══════╝        ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═════╝░
+  ''';
+
+  static String leaveRequestLogo = '''
+  
+██╗░░░░░███████╗░█████╗░██╗░░░██╗███████╗        ██████╗░███████╗░██████╗░██╗░░░██╗███████╗░██████╗████████╗
+██║░░░░░██╔════╝██╔══██╗██║░░░██║██╔════╝        ██╔══██╗██╔════╝██╔═══██╗██║░░░██║██╔════╝██╔════╝╚══██╔══╝
+██║░░░░░█████╗░░███████║╚██╗░██╔╝█████╗░░        ██████╔╝█████╗░░██║██╗██║██║░░░██║█████╗░░╚█████╗░░░░██║░░░
+██║░░░░░██╔══╝░░██╔══██║░╚████╔╝░██╔══╝░░        ██╔══██╗██╔══╝░░╚██████╔╝██║░░░██║██╔══╝░░░╚═══██╗░░░██║░░░
+███████╗███████╗██║░░██║░░╚██╔╝░░███████╗        ██║░░██║███████╗░╚═██╔═╝░╚██████╔╝███████╗██████╔╝░░░██║░░░
+╚══════╝╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚══════╝        ╚═╝░░╚═╝╚══════╝░░░╚═╝░░░░╚═════╝░╚══════╝╚═════╝░░░░╚═╝░░░
+  ''';
 
   static String news1() {
     return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do '
@@ -344,6 +399,45 @@ class Dashboard {
     print('\n\n');
     print(Dashboard.news2());
     print('\n\n');
+  }
+}
+
+class AdminTask {
+  static String? adminDuties() {
+    print('Please select the corresponding letters you wish to navigate:\n'
+        'L for Leave Request\n'
+        'R to Return to Main Menu\n');
+    String? change = stdin.readLineSync();
+    return (change);
+  }
+
+  static String? employeeLeaveRequest(user) {
+    print('Leave Date: ${user.leaveDate}');
+    print('Leave Status: ${user.leaveStatus}');
+    print('Please enter leave date');
+    final String? leaveDateRequest = stdin.readLineSync();
+    print('Your leave date is: $leaveDateRequest');
+    user.leaveDate = leaveDateRequest;
+    user.leaveStatus ='pending';
+    print('Leave Status: ${user.leaveStatus}');
+    return '$leaveDateRequest';
+  }
+
+  static String? editLeaveRequest() {
+    print('Please select user to review request:\n'
+        '0 for admin1\n'
+        '1 for newUser1\n'
+        '2 for newUser2\n'
+        'R to Return to Main Menu');
+    String? reviewLeaveRequest = stdin.readLineSync();
+    return (reviewLeaveRequest);
+  }
+
+  static String? approvedOrDeniedLeave(user) {
+    print('Please enter leave status decision');
+    String? leaveDecision = stdin.readLineSync();
+    user.leaveStatus = leaveDecision;
+    print('Leave Status: ${user.leaveStatus}');
   }
 }
 
@@ -403,7 +497,7 @@ class TimeCard implements AdminInfo, PersonalInfo {
     // print('${b.difference(a).inHours}');
     // print('${b.difference(a).inSeconds}');
     // print('${b.difference(a).inMinutes}');
-    // print('$day:           $timeIn      $timeOut');
+    print('$day:           $timeIn      $timeOut');
     double convertDurationDouble = b.difference(a).inMinutes.toDouble();
     double durationInHours = (convertDurationDouble / 60);
     return (durationInHours);
@@ -466,8 +560,6 @@ class TimeCard implements AdminInfo, PersonalInfo {
         thursdayOut: currentWeekDay4Out,
         fridayIn: currentWeekDay5In,
         fridayOut: currentWeekDay5Out);
-
-    print(newTimeCard);
 
     timeCardList.add(day6_time);
     timeCardList.add(day7_time);
@@ -551,6 +643,9 @@ class TimeCard implements AdminInfo, PersonalInfo {
 
   @override
   String? leaveStatus;
+
+  @override
+  String? leaveDate;
 }
 
 class SalaryReport {
@@ -570,7 +665,7 @@ class Navigator {
         '    * E to Enter New Time Card & View Weekly Work Hours Duration Report\n'
         '    * S for Salary Report \n'
         '    * R to Return Main Menu \n'
-        'M for Employees List  \n'
+        'M for Employees List (Admin only) \n'
         'L for Leave Request \n'
         'Q to Log Out');
     String navigate = stdin.readLineSync()!;
@@ -596,93 +691,97 @@ class Navigator {
   }
 }
 
-
 void main() {
   List employeeSystemList = [];
-  bool outsideEms= true;
+  final admin1 = AdminInfo(
+    salary: 50000,
+    userName: 'admin',
+    password: '1234',
+    firstName: 'Emmeline',
+    lastName: 'Stark',
+    dateOfBirth: 'January 1, 2001',
+    gender: 'Female',
+    father: 'Tony Stark',
+    mother: 'Stephanie Strange',
+    designation: 'Developer',
+    department: 'IT',
+    typeOfAccount: 'admin',
+    currentAddress: 'Manila',
+    permanentAddress: 'Manila',
+    email: 'rdemmz@email.com',
+    contactNumber: 09278888888,
+    highestEducation: 'B.S. Computer Science',
+    languageKnown: 'English',
+    primarySkills: 'Flutter',
+    secondarySkills: 'Python',
+    leaveDate:'none',
+    leaveStatus: '',
+  );
+  employeeSystemList.add(admin1);
+
+  final newUser1 = NewUserInfo(
+      contactNumber: 09287777777,
+      currentAddress: 'Stark Industries',
+      dateOfBirth: 'April 12, 2010',
+      department: 'Quantum Tech',
+      designation: 'Scientist',
+      email: 'tony@email.com',
+      father: 'James Stark',
+      firstName: 'Tony',
+      gender: 'Male',
+      highestEducation: 'Phd in Quantum Technology',
+      languageKnown: 'English',
+      lastName: 'Starks',
+      mother: 'Stephanie Strange',
+      password: '1234',
+      permanentAddress: 'Stark Industries 2',
+      primarySkills: 'Quantum Realm',
+      secondarySkills: 'Robotics',
+      typeOfAccount: 'new user',
+      userName: 'tony',
+      salary: 100000,
+      leaveDate:'none',
+      leaveStatus: '');
+
+  employeeSystemList.add(newUser1);
+
+  final newUser2 = NewUserInfo(
+      contactNumber: 09287777777,
+      currentAddress: 'Strange Industries',
+      dateOfBirth: 'December 29, 2010',
+      department: 'AI Tech',
+      designation: 'Director',
+      email: 'carl@email.com',
+      father: 'Perez',
+      firstName: 'Carl',
+      gender: 'Female',
+      highestEducation: 'Phd in Strange technoology',
+      languageKnown: 'English',
+      lastName: 'Strange',
+      mother: 'Emely Strange',
+      password: '1234',
+      permanentAddress: 'Strange Industries 2',
+      primarySkills: 'Time Realm',
+      secondarySkills: 'Quantum',
+      typeOfAccount: ' new user',
+      userName: 'carl',
+      salary: 200000,
+      leaveDate:'none',
+      leaveStatus: '');
+  employeeSystemList.add(newUser2);
+  bool outsideEms = true;
+
   while (outsideEms) {
     print('Welcome to Employee Management System.');
     print(
         'Don\'t have an account? Please type S to sign up or L to login or A for admin.');
     final String? noAccount = stdin.readLineSync();
 
-    final admin1 = AdminInfo(
-      salary: 50000,
-      userName: 'admin',
-      password: '1234',
-      firstName: 'Emmeline',
-      lastName: 'Stark',
-      dateOfBirth: 'January 1, 2001',
-      gender: 'Female',
-      father: 'Tony Stark',
-      mother: 'Stephanie Strange',
-      designation: 'Developer',
-      department: 'IT',
-      typeOfAccount: 'admin',
-      currentAddress: 'Manila',
-      permanentAddress: 'Manila',
-      email: 'rdemmz@email.com',
-      contactNumber: 09278888888,
-      highestEducation: 'B.S. Computer Science',
-      languageKnown: 'English',
-      primarySkills: 'Flutter',
-      secondarySkills: 'Python',
-      leaveStatus: 'none',
-    );
-    employeeSystemList.add(admin1);
-
-    final newUser1 = NewUserInfo(
-        contactNumber: 09287777777,
-        currentAddress: 'Stark Industries',
-        dateOfBirth: 'April 12, 2010',
-        department: 'Quantum Tech',
-        designation: 'Scientist',
-        email: 'tony@email.com',
-        father: 'James Stark',
-        firstName: 'Tony',
-        gender: 'Male',
-        highestEducation: 'Phd in Quantum Technology',
-        languageKnown: 'English',
-        lastName: 'Starks',
-        mother: 'Stephanie Strange',
-        password: '1234',
-        permanentAddress: 'Stark Industries 2',
-        primarySkills: 'Quantum Realm',
-        secondarySkills: 'Robotics',
-        typeOfAccount: 'new user',
-        userName: 'tony',
-        salary: 100000,
-        leaveStatus: 'none');
-
-    employeeSystemList.add(newUser1);
-
-    final newUser2 = NewUserInfo(
-        contactNumber: 09287777777,
-        currentAddress: 'Strange Industries',
-        dateOfBirth: 'December 29, 2010',
-        department: 'AI Tech',
-        designation: 'Director',
-        email: 'carl@email.com',
-        father: 'Perez',
-        firstName: 'Carl',
-        gender: 'Female',
-        highestEducation: 'Phd in Strange technoology',
-        languageKnown: 'English',
-        lastName: 'Strange',
-        mother: 'Emely Strange',
-        password: '1234',
-        permanentAddress: 'Strange Industries 2',
-        primarySkills: 'Time Realm',
-        secondarySkills: 'Quantum',
-        typeOfAccount: ' new user',
-        userName: 'carl',
-        salary: 200000,
-        leaveStatus: 'none');
-    employeeSystemList.add(newUser2);
-
     if (noAccount == 'A') {
-      if (admin1.userName == AdminInfo.loginUserName() &&
-          admin1.password == AdminInfo.loginPassword()) {
+      var loginUserName = AdminInfo.loginUserName();
+      var loginPassword = AdminInfo.loginPassword();
+      if (admin1.userName == loginUserName &&
+          admin1.password == loginPassword) {
         print(admin1);
 
         bool insideEms = true;
@@ -696,18 +795,18 @@ void main() {
             Dashboard.showNewsInDashboard();
             continue;
           } else if (navigate == 'T') {
-            print('Time Card');
-
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
             double day1_time =
-            (TimeCard.getDifference('Wednesday ', '07:00', '16:07'));
+                (TimeCard.getDifference('Monday    ', '07:00', '16:07'));
             double day2_time =
-            (TimeCard.getDifference('Wednesday ', '07:00', '16:07'));
+                (TimeCard.getDifference('Tuesday   ', '07:00', '16:07'));
             double day3_time =
-            (TimeCard.getDifference('Wednesday ', '07:00', '16:07'));
+                (TimeCard.getDifference('Wednesday ', '07:00', '16:07'));
             double day4_time =
-            (TimeCard.getDifference('Thursday  ', '07:00', '16:08'));
+                (TimeCard.getDifference('Thursday  ', '07:00', '16:08'));
             double day5_time =
-            (TimeCard.getDifference('Friday    ', '07:00', '16:09'));
+                (TimeCard.getDifference('Friday    ', '07:00', '16:09'));
             timeCardList.add(day1_time);
             timeCardList.add(day2_time);
             timeCardList.add(day3_time);
@@ -719,7 +818,7 @@ void main() {
 
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-            weeklyTotalHoursWorkedList.toSet().toList();
+                weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -727,34 +826,51 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, admin1);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(
-                  timeCardList,
-                  weeklyTotalHoursWorkedList,
-                  day1_time,
-                  day2_time,
-                  day3_time,
-                  day4_time,
-                  day5_time);
+              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
+                  day1_time, day2_time, day3_time, day4_time, day5_time);
               continue;
             } else if (navigate == 'R') {
               continue;
             }
           } else if (navigate == 'L') {
-            print('Leave request');
-            print('No current leave request.');
-            print('Please enter leave date:');
-            final String? leaveDate = stdin.readLineSync();
-            print('Your leave date is: $leaveDate');
-            print('Leave Status: pending');
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(admin1);
             continue;
           } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
             print(admin1.toString());
           } else if (navigate == 'M') {
+            print(Dashboard.employeesListLogo);
             for (int i = 0; i < employeeSystemList.length; i++) {
               print(employeeSystemList[i]);
               print('\n');
             }
-          } else if( navigate=='Q'){
+
+            var change = AdminTask.adminDuties();
+            if (change == 'L') {
+              print('Leave Requests:\n'
+                  'Name               Leave Date     \n'
+                  '${admin1.firstName} ${admin1.lastName}     ${admin1.leaveDate}  ${admin1.leaveStatus}\n'
+                  '${newUser1.firstName} ${newUser1.lastName}        ${newUser1.leaveDate}  ${newUser1.leaveStatus}\n'
+                  '${newUser2.firstName} ${newUser2.lastName}       ${newUser2.leaveDate}  ${newUser2.leaveStatus}\n');
+              bool leaveRequestLoop = true;
+              while (leaveRequestLoop) {
+                var reviewLeaveRequest = AdminTask.editLeaveRequest();
+                if (reviewLeaveRequest == '0') {
+                  AdminTask.approvedOrDeniedLeave(admin1);
+                  continue;
+                } else if (reviewLeaveRequest == '1') {
+                  AdminTask.approvedOrDeniedLeave(newUser1);
+                  continue;
+                } else if (reviewLeaveRequest == '2') {
+                  AdminTask.approvedOrDeniedLeave(newUser2);
+                  continue;
+                } else if (reviewLeaveRequest == 'R') {
+                  break;
+                }
+              }
+            }
+          } else if (navigate == 'Q') {
             break;
           }
         }
@@ -820,11 +936,14 @@ void main() {
           typeOfAccount: 'new user',
           userName: newUsername,
           salary: newSalary,
-          leaveStatus: 'none');
+          leaveDate:'none',
+          leaveStatus:'none');
       employeeSystemList.add(newUser);
 
-      if (NewUserInfo.loginUserName() == newUser.userName &&
-          NewUserInfo.loginPassword() == newUser.password) {
+      var loginUserName = AdminInfo.loginUserName();
+      var loginPassword = AdminInfo.loginPassword();
+      if (loginUserName == newUser.userName &&
+          loginPassword == newUser.password) {
         print(newUser);
         List weeklyTotalHoursWorkedList = [];
         List timeCardList = [];
@@ -836,17 +955,18 @@ void main() {
             Dashboard.showNewsInDashboard();
             continue;
           } else if (navigate == 'T') {
-            print('Time Card');
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
             double day1_time =
-            (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
+                (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
             double day2_time =
-            (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
+                (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
             double day3_time =
-            (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
+                (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
             double day4_time =
-            (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
+                (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
             double day5_time =
-            (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
+                (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
 
             double totalHoursWorkedWeek1 =
                 day1_time + day2_time + day3_time + day4_time + day5_time;
@@ -854,7 +974,7 @@ void main() {
 
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-            weeklyTotalHoursWorkedList.toSet().toList();
+                weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -862,37 +982,31 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(
-                  timeCardList,
-                  weeklyTotalHoursWorkedList,
-                  day1_time,
-                  day2_time,
-                  day3_time,
-                  day4_time,
-                  day5_time);
+              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
+                  day1_time, day2_time, day3_time, day4_time, day5_time);
 
               continue;
             } else if (navigate == 'R') {
               continue;
             }
           } else if (navigate == 'L') {
-            print('Leave request');
-            print('No current leave request.');
-            print('Please enter leave date:');
-            final String? leaveDate = stdin.readLineSync();
-            print('Your leave date is: $leaveDate');
-            print('Leave Status: pending');
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(newUser);
             continue;
           } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
             print(newUser.toString());
-          }else if( navigate=='Q'){
+          } else if (navigate == 'Q') {
             break;
           }
         }
       }
     } else if (noAccount == 'L') {
-      if (NewUserInfo.loginUserName() == newUser1.userName &&
-          NewUserInfo.loginPassword() == newUser1.password) {
+      var loginUserName = AdminInfo.loginUserName();
+      var loginPassword = AdminInfo.loginPassword();
+
+      if (loginUserName == newUser1.userName &&
+          loginPassword == newUser1.password) {
         print(newUser1);
         bool insideEms = true;
         List weeklyTotalHoursWorkedList = [];
@@ -905,17 +1019,18 @@ void main() {
             Dashboard.showNewsInDashboard();
             continue;
           } else if (navigate == 'T') {
-            print('Time Card');
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
             double day1_time =
-            (TimeCard.getDifference('Monday    ', '06:00', '15:05'));
+                (TimeCard.getDifference('Monday    ', '06:00', '15:05'));
             double day2_time =
-            (TimeCard.getDifference('Tuesday   ', '06:00', '15:06'));
+                (TimeCard.getDifference('Tuesday   ', '06:00', '15:06'));
             double day3_time =
-            (TimeCard.getDifference('Wednesday ', '06:00', '15:07'));
+                (TimeCard.getDifference('Wednesday ', '06:00', '15:07'));
             double day4_time =
-            (TimeCard.getDifference('Thursday  ', '06:00', '15:08'));
+                (TimeCard.getDifference('Thursday  ', '06:00', '15:08'));
             double day5_time =
-            (TimeCard.getDifference('Friday    ', '06:00', '15:09'));
+                (TimeCard.getDifference('Friday    ', '06:00', '15:09'));
 
             double totalHoursWorkedWeek1 =
                 day1_time + day2_time + day3_time + day4_time + day5_time;
@@ -923,7 +1038,7 @@ void main() {
 
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-            weeklyTotalHoursWorkedList.toSet().toList();
+                weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -931,14 +1046,8 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser1);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(
-                  timeCardList,
-                  weeklyTotalHoursWorkedList,
-                  day1_time,
-                  day2_time,
-                  day3_time,
-                  day4_time,
-                  day5_time);
+              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
+                  day1_time, day2_time, day3_time, day4_time, day5_time);
 
               continue;
             } else if (navigate == 'R') {
@@ -946,21 +1055,18 @@ void main() {
             }
             continue;
           } else if (navigate == 'L') {
-            print('Leave request');
-            print('No current leave request.');
-            print('Please enter leave date:');
-            final String? leaveDate = stdin.readLineSync();
-            print('Your leave date is: $leaveDate');
-            print('Leave Status: pending');
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(newUser1);
             continue;
           } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
             print(newUser1.toString());
-          }else if( navigate=='Q'){
+          } else if (navigate == 'Q') {
             break;
           }
         }
-      } else if (NewUserInfo.loginUserName() == newUser2.userName &&
-          NewUserInfo.loginPassword() == newUser2.password) {
+      } else if (loginUserName == newUser2.userName &&
+          loginPassword == newUser2.password) {
         print(newUser2);
         bool insideEms = true;
         List weeklyTotalHoursWorkedList = [];
@@ -973,24 +1079,25 @@ void main() {
             Dashboard.showNewsInDashboard();
             continue;
           } else if (navigate == 'T') {
-            print('Time Card');
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
             double day1_time =
-            (TimeCard.getDifference('Monday    ', '07:00', '15:05'));
+                (TimeCard.getDifference('Monday    ', '07:00', '15:05'));
             double day2_time =
-            (TimeCard.getDifference('Tuesday   ', '07:00', '15:06'));
+                (TimeCard.getDifference('Tuesday   ', '07:00', '15:06'));
             double day3_time =
-            (TimeCard.getDifference('Wednesday ', '07:00', '15:07'));
+                (TimeCard.getDifference('Wednesday ', '07:00', '15:07'));
             double day4_time =
-            (TimeCard.getDifference('Thursday  ', '07:00', '15:08'));
+                (TimeCard.getDifference('Thursday  ', '07:00', '15:08'));
             double day5_time =
-            (TimeCard.getDifference('Friday    ', '07:00', '15:09'));
+                (TimeCard.getDifference('Friday    ', '07:00', '15:09'));
 
             double totalHoursWorkedWeek1 =
                 day1_time + day2_time + day3_time + day4_time + day5_time;
             print('\n');
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-            weeklyTotalHoursWorkedList.toSet().toList();
+                weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -998,14 +1105,8 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser2);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(
-                  timeCardList,
-                  weeklyTotalHoursWorkedList,
-                  day1_time,
-                  day2_time,
-                  day3_time,
-                  day4_time,
-                  day5_time);
+              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
+                  day1_time, day2_time, day3_time, day4_time, day5_time);
 
               continue;
             } else if (navigate == 'R') {
@@ -1013,16 +1114,13 @@ void main() {
             }
             continue;
           } else if (navigate == 'L') {
-            print('Leave request');
-            print('No current leave request.');
-            print('Please enter leave date:');
-            final String? leaveDate = stdin.readLineSync();
-            print('Your leave date is: $leaveDate');
-            print('Leave Status: pending');
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(newUser2);
             continue;
           } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
             print(newUser2.toString());
-          }else if( navigate=='Q'){
+          } else if (navigate == 'Q') {
             break;
           }
         }
