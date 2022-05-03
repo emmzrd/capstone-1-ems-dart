@@ -853,6 +853,7 @@ void main() {
                   '${admin1.firstName} ${admin1.lastName}     ${admin1.leaveDate}  ${admin1.leaveStatus}\n'
                   '${newUser1.firstName} ${newUser1.lastName}        ${newUser1.leaveDate}  ${newUser1.leaveStatus}\n'
                   '${newUser2.firstName} ${newUser2.lastName}       ${newUser2.leaveDate}  ${newUser2.leaveStatus}\n');
+
               bool leaveRequestLoop = true;
               while (leaveRequestLoop) {
                 var reviewLeaveRequest = AdminTask.editLeaveRequest();
@@ -939,68 +940,9 @@ void main() {
           leaveDate:'none',
           leaveStatus:'none');
       employeeSystemList.add(newUser);
+      print('You have successfully signed up. Please login');
+      continue;
 
-      var loginUserName = AdminInfo.loginUserName();
-      var loginPassword = AdminInfo.loginPassword();
-      if (loginUserName == newUser.userName &&
-          loginPassword == newUser.password) {
-        print(newUser);
-        List weeklyTotalHoursWorkedList = [];
-        List timeCardList = [];
-        bool insideEms = true;
-
-        while (insideEms) {
-          String navigate = Navigator.useNavigator();
-          if (navigate == 'D') {
-            Dashboard.showNewsInDashboard();
-            continue;
-          } else if (navigate == 'T') {
-            print(Dashboard.timeCardLogo);
-            print('Week 1                Time In    Time Out');
-            double day1_time =
-                (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
-            double day2_time =
-                (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
-            double day3_time =
-                (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
-            double day4_time =
-                (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
-            double day5_time =
-                (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
-
-            double totalHoursWorkedWeek1 =
-                day1_time + day2_time + day3_time + day4_time + day5_time;
-            print('\n');
-
-            weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
-            List newWeeklyTotalHoursWorkedList =
-                weeklyTotalHoursWorkedList.toSet().toList();
-            TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
-
-            String navigate = Navigator.salaryReportUnderTimeCard();
-            if (navigate == 'S') {
-              Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser);
-              continue;
-            } else if (navigate == 'E') {
-              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
-                  day1_time, day2_time, day3_time, day4_time, day5_time);
-
-              continue;
-            } else if (navigate == 'R') {
-              continue;
-            }
-          } else if (navigate == 'L') {
-            print(Dashboard.leaveRequestLogo);
-            AdminTask.employeeLeaveRequest(newUser);
-            continue;
-          } else if (navigate == 'P') {
-            print(Dashboard.profileLogo);
-            print(newUser.toString());
-          } else if (navigate == 'Q') {
-            break;
-          }
-        }
-      }
     } else if (noAccount == 'L') {
       var loginUserName = AdminInfo.loginUserName();
       var loginPassword = AdminInfo.loginPassword();
@@ -1022,15 +964,15 @@ void main() {
             print(Dashboard.timeCardLogo);
             print('Week 1                Time In    Time Out');
             double day1_time =
-                (TimeCard.getDifference('Monday    ', '06:00', '15:05'));
+            (TimeCard.getDifference('Monday    ', '06:00', '15:05'));
             double day2_time =
-                (TimeCard.getDifference('Tuesday   ', '06:00', '15:06'));
+            (TimeCard.getDifference('Tuesday   ', '06:00', '15:06'));
             double day3_time =
-                (TimeCard.getDifference('Wednesday ', '06:00', '15:07'));
+            (TimeCard.getDifference('Wednesday ', '06:00', '15:07'));
             double day4_time =
-                (TimeCard.getDifference('Thursday  ', '06:00', '15:08'));
+            (TimeCard.getDifference('Thursday  ', '06:00', '15:08'));
             double day5_time =
-                (TimeCard.getDifference('Friday    ', '06:00', '15:09'));
+            (TimeCard.getDifference('Friday    ', '06:00', '15:09'));
 
             double totalHoursWorkedWeek1 =
                 day1_time + day2_time + day3_time + day4_time + day5_time;
@@ -1038,7 +980,7 @@ void main() {
 
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-                weeklyTotalHoursWorkedList.toSet().toList();
+            weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -1046,8 +988,14 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser1);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
-                  day1_time, day2_time, day3_time, day4_time, day5_time);
+              TimeCard.newTimeCard(
+                  timeCardList,
+                  weeklyTotalHoursWorkedList,
+                  day1_time,
+                  day2_time,
+                  day3_time,
+                  day4_time,
+                  day5_time);
 
               continue;
             } else if (navigate == 'R') {
@@ -1082,22 +1030,22 @@ void main() {
             print(Dashboard.timeCardLogo);
             print('Week 1                Time In    Time Out');
             double day1_time =
-                (TimeCard.getDifference('Monday    ', '07:00', '15:05'));
+            (TimeCard.getDifference('Monday    ', '07:00', '15:05'));
             double day2_time =
-                (TimeCard.getDifference('Tuesday   ', '07:00', '15:06'));
+            (TimeCard.getDifference('Tuesday   ', '07:00', '15:06'));
             double day3_time =
-                (TimeCard.getDifference('Wednesday ', '07:00', '15:07'));
+            (TimeCard.getDifference('Wednesday ', '07:00', '15:07'));
             double day4_time =
-                (TimeCard.getDifference('Thursday  ', '07:00', '15:08'));
+            (TimeCard.getDifference('Thursday  ', '07:00', '15:08'));
             double day5_time =
-                (TimeCard.getDifference('Friday    ', '07:00', '15:09'));
+            (TimeCard.getDifference('Friday    ', '07:00', '15:09'));
 
             double totalHoursWorkedWeek1 =
                 day1_time + day2_time + day3_time + day4_time + day5_time;
             print('\n');
             weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
             List newWeeklyTotalHoursWorkedList =
-                weeklyTotalHoursWorkedList.toSet().toList();
+            weeklyTotalHoursWorkedList.toSet().toList();
             TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
 
             String navigate = Navigator.salaryReportUnderTimeCard();
@@ -1105,8 +1053,14 @@ void main() {
               Navigator.computeSalary(newWeeklyTotalHoursWorkedList, newUser2);
               continue;
             } else if (navigate == 'E') {
-              TimeCard.newTimeCard(timeCardList, weeklyTotalHoursWorkedList,
-                  day1_time, day2_time, day3_time, day4_time, day5_time);
+              TimeCard.newTimeCard(
+                  timeCardList,
+                  weeklyTotalHoursWorkedList,
+                  day1_time,
+                  day2_time,
+                  day3_time,
+                  day4_time,
+                  day5_time);
 
               continue;
             } else if (navigate == 'R') {
@@ -1120,6 +1074,201 @@ void main() {
           } else if (navigate == 'P') {
             print(Dashboard.profileLogo);
             print(newUser2.toString());
+          } else if (navigate == 'Q') {
+            break;
+          }
+        }
+      } else if (loginUserName == employeeSystemList[3].userName &&
+          loginPassword == employeeSystemList[3].password) {
+        print(employeeSystemList[3]);
+        List weeklyTotalHoursWorkedList = [];
+        List timeCardList = [];
+        bool insideEms = true;
+
+        while (insideEms) {
+          String navigate = Navigator.useNavigator();
+          if (navigate == 'D') {
+            Dashboard.showNewsInDashboard();
+            continue;
+          } else if (navigate == 'T') {
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
+            double day1_time =
+            (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
+            double day2_time =
+            (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
+            double day3_time =
+            (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
+            double day4_time =
+            (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
+            double day5_time =
+            (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
+
+            double totalHoursWorkedWeek1 =
+                day1_time + day2_time + day3_time + day4_time + day5_time;
+            print('\n');
+
+            weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
+            List newWeeklyTotalHoursWorkedList =
+            weeklyTotalHoursWorkedList.toSet().toList();
+            TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
+
+            String navigate = Navigator.salaryReportUnderTimeCard();
+            if (navigate == 'S') {
+              Navigator.computeSalary(
+                  newWeeklyTotalHoursWorkedList, employeeSystemList[3]);
+              continue;
+            } else if (navigate == 'E') {
+              TimeCard.newTimeCard(
+                  timeCardList,
+                  weeklyTotalHoursWorkedList,
+                  day1_time,
+                  day2_time,
+                  day3_time,
+                  day4_time,
+                  day5_time);
+
+              continue;
+            } else if (navigate == 'R') {
+              continue;
+            }
+          } else if (navigate == 'L') {
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(employeeSystemList[3]);
+            continue;
+          } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
+            print(employeeSystemList[3].toString());
+          } else if (navigate == 'Q') {
+            break;
+          }
+        }
+      }else if (loginUserName == employeeSystemList[4].userName &&
+          loginPassword == employeeSystemList[4].password) {
+        print(employeeSystemList[4]);
+        List weeklyTotalHoursWorkedList = [];
+        List timeCardList = [];
+        bool insideEms = true;
+
+        while (insideEms) {
+          String navigate = Navigator.useNavigator();
+          if (navigate == 'D') {
+            Dashboard.showNewsInDashboard();
+            continue;
+          } else if (navigate == 'T') {
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
+            double day1_time =
+            (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
+            double day2_time =
+            (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
+            double day3_time =
+            (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
+            double day4_time =
+            (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
+            double day5_time =
+            (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
+
+            double totalHoursWorkedWeek1 =
+                day1_time + day2_time + day3_time + day4_time + day5_time;
+            print('\n');
+
+            weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
+            List newWeeklyTotalHoursWorkedList =
+            weeklyTotalHoursWorkedList.toSet().toList();
+            TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
+
+            String navigate = Navigator.salaryReportUnderTimeCard();
+            if (navigate == 'S') {
+              Navigator.computeSalary(
+                  newWeeklyTotalHoursWorkedList, employeeSystemList[4]);
+              continue;
+            } else if (navigate == 'E') {
+              TimeCard.newTimeCard(
+                  timeCardList,
+                  weeklyTotalHoursWorkedList,
+                  day1_time,
+                  day2_time,
+                  day3_time,
+                  day4_time,
+                  day5_time);
+
+              continue;
+            } else if (navigate == 'R') {
+              continue;
+            }
+          } else if (navigate == 'L') {
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(employeeSystemList[4]);
+            continue;
+          } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
+            print(employeeSystemList[4].toString());
+          } else if (navigate == 'Q') {
+            break;
+          }
+        }
+      }else if (loginUserName == employeeSystemList[5].userName &&
+          loginPassword == employeeSystemList[5].password) {
+        print(employeeSystemList[5]);
+        List weeklyTotalHoursWorkedList = [];
+        List timeCardList = [];
+        bool insideEms = true;
+
+        while (insideEms) {
+          String navigate = Navigator.useNavigator();
+          if (navigate == 'D') {
+            Dashboard.showNewsInDashboard();
+            continue;
+          } else if (navigate == 'T') {
+            print(Dashboard.timeCardLogo);
+            print('Week 1                Time In    Time Out');
+            double day1_time =
+            (TimeCard.getDifference('Monday    ', '08:00', '17:05'));
+            double day2_time =
+            (TimeCard.getDifference('Tuesday   ', '08:00', '17:06'));
+            double day3_time =
+            (TimeCard.getDifference('Wednesday ', '08:00', '17:07'));
+            double day4_time =
+            (TimeCard.getDifference('Thursday  ', '08:00', '17:08'));
+            double day5_time =
+            (TimeCard.getDifference('Friday    ', '07:00', '17:09'));
+
+            double totalHoursWorkedWeek1 =
+                day1_time + day2_time + day3_time + day4_time + day5_time;
+            print('\n');
+
+            weeklyTotalHoursWorkedList.add(totalHoursWorkedWeek1);
+            List newWeeklyTotalHoursWorkedList =
+            weeklyTotalHoursWorkedList.toSet().toList();
+            TimeCard.getTotalHoursWorkedWeekly(newWeeklyTotalHoursWorkedList);
+
+            String navigate = Navigator.salaryReportUnderTimeCard();
+            if (navigate == 'S') {
+              Navigator.computeSalary(
+                  newWeeklyTotalHoursWorkedList, employeeSystemList[5]);
+              continue;
+            } else if (navigate == 'E') {
+              TimeCard.newTimeCard(
+                  timeCardList,
+                  weeklyTotalHoursWorkedList,
+                  day1_time,
+                  day2_time,
+                  day3_time,
+                  day4_time,
+                  day5_time);
+
+              continue;
+            } else if (navigate == 'R') {
+              continue;
+            }
+          } else if (navigate == 'L') {
+            print(Dashboard.leaveRequestLogo);
+            AdminTask.employeeLeaveRequest(employeeSystemList[5]);
+            continue;
+          } else if (navigate == 'P') {
+            print(Dashboard.profileLogo);
+            print(employeeSystemList[5].toString());
           } else if (navigate == 'Q') {
             break;
           }
